@@ -1,12 +1,22 @@
 #!/bin/sh
 
 create_initi_config() {
-  ls -lh
-  sudo ln -sf /service/target/game-service-0.0.1-SNAPSHOT.jar /etc/init.d/game-app
+  sudo cp service/target/game-service-0.0.1-SNAPSHOT.jar /home/joel/apps/game_app
+  sudo ln -sf /home/joel/apps/game_app/game-service-0.0.1-SNAPSHOT.jar /etc/init.d/game-app.jar
+  sudo chmod 775 /etc/init.d/game-app.jar
+  sudo cp scripts/deploy /home/joel/apps/game_app/scripts
 }
 
 start_service() {
-  /etc/init.d/game-app start
+  /etc/init.d/game-app.jar start
+}
+
+stop_service() {
+  /etc/init.d/game-app.jar stop
+}
+
+restart_service() {
+  /etc/init.d/game-app.jar restart
 }
 
 #Preparing configuration
