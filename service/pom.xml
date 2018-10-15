@@ -27,7 +27,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.joel.maventest</groupId>
+      <groupId>edu.joel.maventest</groupId>
       <artifactId>game-implementation</artifactId>
       <version>${project.parent.version}</version>
     </dependency>
