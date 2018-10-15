@@ -1,8 +1,9 @@
 #!/bin/sh
+path=$1
 
 create_initi_config() {
   ls -lh
-  sudo cp service/target/game-service-0.0.1-SNAPSHOT.jar /home/joel/apps/game_app
+  mkdir -p /home/joel/apps/game_app && $path/game-service-0.0.1-SNAPSHOT.jar $_
   sudo ln -sf /home/joel/apps/game_app/game-service-0.0.1-SNAPSHOT.jar /etc/init.d/game-app.jar
   sudo chmod 775 /etc/init.d/game-app.jar
 }
