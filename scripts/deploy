@@ -5,6 +5,7 @@ create_initi_config() {
   sudo ln -sf /home/joel/apps/game_app/game-service-0.0.1-SNAPSHOT.jar /etc/init.d/game-app.jar
   sudo chmod 775 /etc/init.d/game-app.jar
   sudo cp scripts/deploy /home/joel/apps/game_app/scripts
+  sudo chmod 775 /home/joel/apps/game_app/scripts/deploy
 }
 
 start_service() {
