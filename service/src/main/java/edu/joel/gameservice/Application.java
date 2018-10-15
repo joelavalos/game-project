@@ -18,14 +18,6 @@ import org.springframework.util.StringUtils;
 public class Application {
 
   public static void main(final String... args) {
-    //SpringApplication.run(Application.class, args);
-
-    AnimalBase cat = new Cat();
-
-    System.out.println(cat instanceof Animal);
-
-    if (cat instanceof Animal) {
-      Object o = (Animal) cat;
-    }
+    SpringApplication.run(Application.class, args);
   }
 }
