@@ -1,0 +1,16 @@
+#!/bin/sh
+
+create_initi_config() {
+  ls -lh
+  sudo ln -sf /service/target/game-service-0.0.1-SNAPSHOT.jar /etc/init.d/game-app
+}
+
+start_service() {
+  /etc/init.d/game-app start
+}
+
+#Preparing configuration
+create_initi_config
+
+#Starting service
+start_service
