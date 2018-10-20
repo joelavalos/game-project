@@ -1,11 +1,19 @@
 #!/bin/sh
 path=$1
+config_path=$2
+app_port=$3
 
 create_initi_config() {
-  sudo mkdir -p /home/joel/apps/game_app
-  sudo cp $path/game-service-0.0.1-SNAPSHOT.jar /home/joel/apps/game_app
-  sudo ln -sf /home/joel/apps/game_app/game-service-0.0.1-SNAPSHOT.jar /etc/init.d/game-app.jar
+  sudo mkdir -p /var/cse/game_app
+  sudo cp -f $path/game-service-0.0.1-SNAPSHOT.jar /var/cse/game_app
+  sudo ln -sf /var/cse/game_app/game-service-0.0.1-SNAPSHOT.jar /etc/init.d/game-app.jar
   sudo chmod 775 /etc/init.d/game-app.jar
+  sudo cp -f $config_path/game-service-0.0.1-SNAPSHOT.conf /var/cse/game_app
+}
+
+prepare_game_yml () {
+  sudo sed 's/${deploy_port}/$app_port/' $config_path/base.yml
+  sudo cp -f $config_path/base.yml /var/cse/game_app/game-app.yml
 }
 
 start_service() {
@@ -22,6 +30,9 @@ restart_service() {
 
 #Preparing configuration
 create_initi_config
+
+#Prepare game.yml
+prepare_game_yml
 
 #Starting service
 start_service
