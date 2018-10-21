@@ -12,8 +12,8 @@ create_initi_config() {
 }
 
 prepare_game_yml () {
-  sudo sed 's/${deploy_port}/'$app_port'/' $config_path/base.yml
-  sudo cp -f $config_path/base.yml /var/cse/game-app/game-app.yml
+  sudo sed 's/${deploy_port}/'$app_port'/' $config_path/base.yml > /var/cse/game-app/game-app.yml
+  #sudo cp -f $config_path/base.yml /var/cse/game-app/game-app.yml
 }
 
 start_service() {
