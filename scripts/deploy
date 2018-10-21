@@ -19,7 +19,7 @@ check_health () {
   #sudo status=$(curl --connect-timeout 5 --max-time 10 --retry 5 --retry-max-time 10  http://localhost:$app_port/actuator/health | grep -oi '"status":"up"' | sed 's/\"//g' | awk -F':' '{ print $2 }' )
   #sudo echo $status
   status="UP"
-  if [ $status == "UP" ]; then
+  if [[ "$status" == "UP" ]]; then
     echo "Service is up"
   else
     exit 1
