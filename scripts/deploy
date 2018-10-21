@@ -16,7 +16,7 @@ prepare_game_yml () {
 }
 
 check_health () {
-  sudo status=$(curl http://localhost:$app_port/actuator/health | grep -oi '"status":"up"' | sed 's/\"//g' | awk -F':' '{ print $2 }' )
+  sudo status=$(curl --retry-max-time 10 --retry 5 --max-time 10 http://localhost:$app_port/actuator/health | grep -oi '"status":"up"' | sed 's/\"//g' | awk -F':' '{ print $2 }' )
   sudo echo $status
   if [ "$status" == "UP" ]; then
     echo "Service is up"
