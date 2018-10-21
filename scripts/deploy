@@ -16,7 +16,13 @@ prepare_game_yml () {
 }
 
 check_health () {
-	sudo echo "Pending step"
+  sudo status=$(curl http://localhost:$app_port/actuator/health | grep -oi '"status":"up"' | sed 's/\"//g' | awk -F':' '{ print $2 }' )
+  sudo echo $status
+  if [ "$status" == "UP" ]; then
+    echo "Service is up"
+  else
+    exit 1
+  fi
 }
 
 start_service() {
