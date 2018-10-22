@@ -17,29 +17,24 @@ prepare_game_yml () {
 
 check_health () {
 
+  status=$(curl http://localhost:$app_port/actuator/health | grep -oi '"status":"up"' | sed 's/\"//g' | awk -F':' '{ print $2 }')
+  echo "Status: $status"
+
   local attemp=1
   max_attemps=5
-  delay=15
+  delay=2
 
-  echo "Start sleep"
-  sleep $delay
-  echo "Stop sleep"
+  while [ "$attemp" -le "$max_attemps" ];  do
+    echo "Attemp: $attemp/$max_attemps"
+    status=$(curl http://localhost:$app_port/actuator/health | grep -oi '"status":"up"' | sed 's/\"//g' | awk -F':' '{ print $2 }' )
+    echo "Status: $status"
 
-  status=$(curl http://localhost:$app_port/actuator/health | grep -oi '"status":"up"' | sed 's/\"//g' | awk -F':' '{ print $2 }')
-  echo "$status"
+    echo "Start waiting"
+    sleep $delay
+    echo "Stop waitin"
 
-  # while [ "$attemp" -le "$max_attemps" ];  do
-  #   echo "Attemp: $attemp/$max_attemps"
-  #   sudo local status=$(curl http://localhost:$app_port/actuator/health | grep -oi '"status":"up"' | sed 's/\"//g' | awk -F':' '{ print $2 }' )
-  #   echo "This is the status:"
-  #   echo "$status"
-  #
-  #   echo "Start"
-  #   sleep $delay
-  #   echo "Stop"
-  #
-  #   attemp=`expr $attemp + 1`
-  # done
+    attemp=`expr $attemp + 1`
+  done
 
   if [ "$status" = "UP" ]; then
     echo "Service check status: SUCCESS"
