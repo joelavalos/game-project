@@ -25,12 +25,13 @@ check_health () {
   while [ "$status" != "UP" ];  do
     echo "Attemp: $attemp/$max_attemps"
     sudo status=$(curl http://localhost:$app_port/actuator/health | grep -oi '"status":"up"' | sed 's/\"//g' | awk -F':' '{ print $2 }' )
+    echo "$status"
 
     echo "Start"
     sleep $delay
     echo "Stop"
 
-    (($attemp++))
+    (($attemp++));
   done
 
   if [ "$status" = "UP" ]; then
