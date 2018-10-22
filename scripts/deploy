@@ -31,7 +31,7 @@ check_health () {
     sleep $delay
     echo "Stop"
 
-    (($attemp++));
+    attemp=`expr $attemp + 1`
   done
 
   if [ "$status" = "UP" ]; then
