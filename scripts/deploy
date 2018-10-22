@@ -26,7 +26,10 @@ check_health () {
     echo "Attemp: $attemp/$max_attemps"
     sudo status=$(curl http://localhost:$app_port/actuator/health | grep -oi '"status":"up"' | sed 's/\"//g' | awk -F':' '{ print $2 }' )
 
+    echo "Start"
     sleep $delay
+    echo "Stop"
+
     (($attemp++))
   done
 
