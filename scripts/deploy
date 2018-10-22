@@ -22,7 +22,7 @@ check_health () {
 
   local attemp=1
   max_attemps=5
-  delay=2
+  delay=5
 
   while [ "$attemp" -le "$max_attemps" ];  do
     echo "Attemp: $attemp/$max_attemps"
