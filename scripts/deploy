@@ -24,7 +24,7 @@ check_health () {
   max_attemps=5
   delay=5
 
-  while [ "$attemp" -le "$max_attemps" ];  do
+  while [ "$status" != "UP" ] && [ "$attemp" -le "$max_attemps" ];  do
     echo "Attemp: $attemp/$max_attemps"
     status=$(curl http://localhost:$app_port/actuator/health | grep -oi '"status":"up"' | sed 's/\"//g' | awk -F':' '{ print $2 }' )
     echo "Status: $status"
