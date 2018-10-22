@@ -16,12 +16,24 @@ prepare_game_yml () {
 }
 
 check_health () {
-  sudo status=$(curl --connect-timeout 5 --max-time 10 --retry 5 --retry-delay 0 --retry-max-time 10  http://localhost:$app_port/actuator/health | grep -oi '"status":"up"' | sed 's/\"//g' | awk -F':' '{ print $2 }' )
-  sudo echo $status
+  sudo status=$(curl http://localhost:$app_port/actuator/health | grep -oi '"status":"up"' | sed 's/\"//g' | awk -F':' '{ print $2 }' )
+
+  local attemp=1
+  max_attemps=5
+  delay=5
+
+  while [[ "$status" != "UP" && "$attemp" -le "$max_attemps" ]]; do
+    echo "Attemp: $attemp/$max_attemps"
+    sudo status=$(curl http://localhost:$app_port/actuator/health | grep -oi '"status":"up"' | sed 's/\"//g' | awk -F':' '{ print $2 }' )
+
+    sleep $delay
+    (($attemp++))
+  done
 
   if [ "$status" = "UP" ]; then
-    echo "Service is up"
+    echo "Service check status: SUCCESS"
   else
+    echo "Service check status: FAILED"
     exit 1
   fi
 }
